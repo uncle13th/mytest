@@ -42,7 +42,6 @@ class MenuController extends Controller
             'url' => 'nullable|max:255',
             'sort' => 'required|integer',
             'is_show' => 'required|boolean',
-            'type' => 'required|in:folder,menu'
         ]);
 
         // 如果是文件夹类型，清空 URL
@@ -77,7 +76,6 @@ class MenuController extends Controller
             'url' => 'nullable|max:255',
             'sort' => 'required|integer',
             'is_show' => 'required|boolean',
-            'type' => 'required|in:folder,menu'
         ]);
 
         // 检查是否将菜单设置为其子菜单的子菜单

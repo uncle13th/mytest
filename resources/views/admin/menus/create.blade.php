@@ -28,20 +28,6 @@
                 </div>
 
                 <div>
-                    <label class="text-gray-700" for="type">菜单类型</label>
-                    <select class="form-select w-full mt-2 rounded-md border-gray-300" 
-                            name="type" 
-                            id="type" 
-                            required>
-                        <option value="menu" {{ old('type') == 'menu' ? 'selected' : '' }}>菜单</option>
-                        <option value="folder" {{ old('type') == 'folder' ? 'selected' : '' }}>文件夹</option>
-                    </select>
-                    @error('type')
-                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                    @enderror
-                </div>
-
-                <div>
                     <label class="text-gray-700" for="parent_id">上级菜单</label>
                     <select class="form-select w-full mt-2 rounded-md border-gray-300" 
                             name="parent_id" 
@@ -116,19 +102,9 @@
 @push('scripts')
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    const typeSelect = document.getElementById('type');
     const urlField = document.getElementById('url-field');
     
-    function toggleUrlField() {
-        if (typeSelect.value === 'folder') {
-            urlField.style.display = 'none';
-        } else {
-            urlField.style.display = 'block';
-        }
-    }
-    
-    toggleUrlField();
-    typeSelect.addEventListener('change', toggleUrlField);
+    urlField.style.display = 'block';
 });
 </script>
 @endpush

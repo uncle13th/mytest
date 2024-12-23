@@ -25,6 +25,9 @@
                         系统管理
                     </h3>
                     <div class="mt-2 space-y-1">
+                        <a href="{{ route('admin.menus.index') }}" class="block py-2.5 px-4 rounded transition duration-200 {{ request()->routeIs('admin.menus.*') ? 'bg-gray-900' : 'hover:bg-gray-700' }}">
+                            <i class="fas fa-bars mr-2"></i>菜单管理
+                        </a>
                         <a href="{{ route('admin.admins.index') }}" class="block py-2.5 px-4 rounded transition duration-200 {{ request()->routeIs('admin.admins.*') ? 'bg-gray-900' : 'hover:bg-gray-700' }}">
                             <i class="fas fa-users-cog mr-2"></i>管理员管理
                         </a>
@@ -33,9 +36,6 @@
                         </a>
                         <a href="{{ route('admin.permissions.index') }}" class="block py-2.5 px-4 rounded transition duration-200 {{ request()->routeIs('admin.permissions.*') ? 'bg-gray-900' : 'hover:bg-gray-700' }}">
                             <i class="fas fa-key mr-2"></i>权限管理
-                        </a>
-                        <a href="{{ route('admin.menus.index') }}" class="block py-2.5 px-4 rounded transition duration-200 {{ request()->routeIs('admin.menus.*') ? 'bg-gray-900' : 'hover:bg-gray-700' }}">
-                            <i class="fas fa-bars mr-2"></i>菜单管理
                         </a>
                     </div>
                 </div>
