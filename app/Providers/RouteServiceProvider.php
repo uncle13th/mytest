@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Route;
+use App\Models\Role;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -14,10 +15,10 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    protected $namespace = 'App\Http\Controllers';
+    protected $namespace = '';
 
     /**
-     * The path to the "home" route for your application.
+     * The path to your application's "home" route.
      *
      * @var string
      */
@@ -30,9 +31,9 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
-
         parent::boot();
+
+        Route::model('role', Role::class);
     }
 
     /**
