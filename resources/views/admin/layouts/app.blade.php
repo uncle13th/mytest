@@ -63,9 +63,13 @@
             <!-- 顶部导航栏 -->
             <header class="bg-white shadow">
                 <div class="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8">
-                    <h2 class="text-xl font-semibold text-gray-800">
-                        @yield('header', '仪表板')
-                    </h2>
+                    @hasSection('breadcrumb')
+                        @yield('breadcrumb')
+                    @else
+                        <h2 class="text-xl font-semibold text-gray-800">
+                            @yield('header', '仪表板')
+                        </h2>
+                    @endif
                 </div>
             </header>
 
