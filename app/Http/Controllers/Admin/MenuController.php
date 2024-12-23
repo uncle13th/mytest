@@ -10,15 +10,43 @@ class MenuController extends Controller
 {
     public function index(Request $request)
     {
-        // 获取所有顶级菜单及其子菜单
-        $menus = Menu::with(['children' => function ($query) {
-            $query->orderBy('sort');
-        }])
-        ->where('parent_id', 0)
-        ->orderBy('sort')
-        ->get();
+        // 获取状态筛选参数，默认为显示
+        $status = $request->get('status', 'show');
 
-        return view('admin.menus.index', compact('menus'));
+        // 获取所有顶级菜单
+        $menus = Menu::where('parent_id', 0)
+            ->orderBy('sort')
+            ->with(['children' => function ($query) {
+                $query->orderBy('sort');
+            }])
+            ->get()
+            ->map(function ($menu) use ($status) {
+                // 递归处理子菜单，根据状态筛选
+                $menu->children = $this->filterMenuChildren($menu->children, $status);
+                return $menu;
+            });
+
+        return view('admin.menus.index', compact('menus', 'status'));
+    }
+
+    /**
+     * 递归筛选子菜单
+     */
+    private function filterMenuChildren($children, $status)
+    {
+        return $children->when($status !== 'all', function ($collection) use ($status) {
+                // 筛选符合状态条件的菜单
+                return $collection->filter(function ($menu) use ($status) {
+                    return $menu->is_show === ($status === 'show');
+                });
+            })
+            ->map(function ($menu) use ($status) {
+                // 递归处理下一级子菜单
+                if ($menu->children && $menu->children->count() > 0) {
+                    $menu->children = $this->filterMenuChildren($menu->children, $status);
+                }
+                return $menu;
+            });
     }
 
     public function create()
