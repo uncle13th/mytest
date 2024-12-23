@@ -13,18 +13,20 @@ class MenuController extends Controller
         // 获取状态筛选参数，默认为显示
         $status = $request->get('status', 'show');
 
-        // 获取所有顶级菜单
-        $menus = Menu::where('parent_id', 0)
-            ->orderBy('sort')
-            ->with(['children' => function ($query) {
-                $query->orderBy('sort');
-            }])
-            ->get()
-            ->map(function ($menu) use ($status) {
-                // 递归处理子菜单，根据状态筛选
-                $menu->children = $this->filterMenuChildren($menu->children, $status);
-                return $menu;
-            });
+        // 获取所有菜单数据
+        $query = Menu::where('parent_id', 0)->orderBy('sort');
+        
+        // 如果不是显示全部，则只显示可见菜单
+        if ($status !== 'all') {
+            $query->where('is_show', true);
+        }
+
+        $menus = $query->with(['children' => function ($query) use ($status) {
+            $query->orderBy('sort');
+            if ($status !== 'all') {
+                $query->where('is_show', true);
+            }
+        }])->get();
 
         return view('admin.menus.index', compact('menus', 'status'));
     }
@@ -111,12 +113,10 @@ class MenuController extends Controller
             return back()->with('error', '不能将菜单设置为其子菜单的子菜单');
         }
 
-        // 如果是文件夹类型，清空 URL
-        if ($request->type === 'folder') {
-            $request->merge(['url' => null]);
-        }
+        // 准备要更新的数据
+        $data = $request->only(['name', 'parent_id', 'url', 'sort', 'is_show']);
 
-        $menu->update($request->all());
+        $menu->update($data);
         return redirect()->route('admin.menus.index')->with('success', '菜单更新成功');
     }
 
