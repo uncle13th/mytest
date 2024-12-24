@@ -21,7 +21,7 @@
             @csrf
             
             <div class="space-y-2">
-                <label for="name" class="block text-sm font-medium leading-6 text-gray-900">名称</label>
+                <label for="name" class="block text-sm font-medium leading-6 text-gray-900">菜单名称</label>
                 <input type="text" name="name" id="name" class="mt-2 block w-full rounded-md border-0 px-4 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" value="{{ old('name') }}" required>
                 @error('name')
                     <p class="mt-2 text-sm font-medium text-red-600">{{ $message }}</p>
@@ -54,14 +54,6 @@
                 <label for="url" class="block text-sm font-medium leading-6 text-gray-900">URL</label>
                 <input type="text" name="url" id="url" class="mt-2 block w-full rounded-md border-0 px-4 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" value="{{ old('url') }}" required>
                 @error('url')
-                    <p class="mt-2 text-sm font-medium text-red-600">{{ $message }}</p>
-                @enderror
-            </div>
-
-            <div class="space-y-2">
-                <label for="icon" class="block text-sm font-medium leading-6 text-gray-900">图标</label>
-                <input type="text" name="icon" id="icon" class="mt-2 block w-full rounded-md border-0 px-4 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" value="{{ old('icon') }}">
-                @error('icon')
                     <p class="mt-2 text-sm font-medium text-red-600">{{ $message }}</p>
                 @enderror
             </div>
