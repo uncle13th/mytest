@@ -60,7 +60,8 @@
 
             <div class="space-y-2">
                 <label for="sort" class="block text-sm font-medium leading-6 text-gray-900">排序</label>
-                <input type="number" name="sort" id="sort" class="mt-2 block w-full rounded-md border-0 px-4 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" value="{{ old('sort', 0) }}" required>
+                <input type="number" name="sort" id="sort" min="0" class="mt-2 block w-full rounded-md border-0 px-4 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" value="{{ old('sort', 0) }}" required>
+                <p class="mt-1 text-sm text-gray-500">数字越小排序越靠前</p>
                 @error('sort')
                     <p class="mt-2 text-sm font-medium text-red-600">{{ $message }}</p>
                 @enderror

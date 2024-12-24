@@ -80,7 +80,7 @@ class MenuController extends Controller
                 'name' => 'required|max:255',
                 'parent_id' => 'required|integer',
                 'url' => 'nullable|max:255',
-                'sort' => 'required|integer',
+                'sort' => 'required|integer|min:0',
                 'is_show' => 'required|boolean',
             ]);
 
@@ -118,13 +118,18 @@ class MenuController extends Controller
 
     public function update(Request $request, Menu $menu)
     {
-        $request->validate([
+        $validated = $request->validate([
             'name' => 'required|max:255',
             'parent_id' => 'required|integer',
             'url' => 'nullable|max:255',
-            'sort' => 'required|integer',
+            'sort' => 'required|integer|min:0',
             'is_show' => 'required|boolean',
         ]);
+
+        // 如果是文件夹类型，清空 URL
+        if ($request->type === 'folder') {
+            $request->merge(['url' => null]);
+        }
 
         // 检查是否将菜单设置为其子菜单的子菜单
         if ($this->isChildMenu($menu, $request->parent_id)) {

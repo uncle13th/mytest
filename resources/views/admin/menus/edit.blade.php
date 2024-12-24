@@ -61,7 +61,8 @@
 
             <div class="space-y-2">
                 <label for="sort" class="block text-sm font-medium leading-6 text-gray-900">排序</label>
-                <input type="number" name="sort" id="sort" class="mt-2 block w-full rounded-md border-0 px-4 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" value="{{ old('sort', $menu->sort) }}" required>
+                <input type="number" name="sort" id="sort" min="0" class="mt-2 block w-full rounded-md border-0 px-4 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" value="{{ old('sort', $menu->sort) }}" required>
+                <p class="mt-1 text-sm text-gray-500">数字越小排序越靠前</p>
                 @error('sort')
                     <p class="mt-2 text-sm font-medium text-red-600">{{ $message }}</p>
                 @enderror
@@ -71,11 +72,11 @@
                 <label class="block text-sm font-medium leading-6 text-gray-900">显示状态</label>
                 <div class="mt-2 space-x-4">
                     <label class="inline-flex items-center">
-                        <input type="radio" name="is_show" value="1" class="form-radio text-indigo-600 h-4 w-4" {{ old('is_show', $menu->is_show) == 1 ? 'checked' : '' }}>
+                        <input type="radio" name="is_show" value="1" class="form-radio text-indigo-600 h-4 w-4" {{ old('is_show', $menu->is_show) ? 'checked' : '' }}>
                         <span class="ml-2 text-sm text-gray-700">显示</span>
                     </label>
                     <label class="inline-flex items-center">
-                        <input type="radio" name="is_show" value="0" class="form-radio text-indigo-600 h-4 w-4" {{ old('is_show', $menu->is_show) === 0 ? 'checked' : '' }}>
+                        <input type="radio" name="is_show" value="0" class="form-radio text-indigo-600 h-4 w-4" {{ old('is_show', $menu->is_show) ? '' : 'checked' }}>
                         <span class="ml-2 text-sm text-gray-700">隐藏</span>
                     </label>
                 </div>
