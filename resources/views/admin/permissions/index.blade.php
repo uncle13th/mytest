@@ -8,7 +8,7 @@
 <div class="bg-white shadow rounded-lg">
     <div class="p-4 border-b border-gray-200 flex justify-between items-center">
         <div class="flex-1">
-            <form action="{{ route('permissions.index') }}" method="GET" class="flex items-center">
+            <form action="{{ route('admin.permissions.index') }}" method="GET" class="flex items-center">
                 <label for="search" class="mr-2 text-sm font-medium text-gray-700">权限名称</label>
                 <div class="relative" style="width: 200px;">
                     <input type="text" 
@@ -24,7 +24,7 @@
                     <i class="fas fa-search mr-2"></i>搜索
                 </button>
                 @if(request('search'))
-                    <a href="{{ route('permissions.index') }}" 
+                    <a href="{{ route('admin.permissions.index') }}" 
                        class="ml-4 inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                        style="height: 40px;">
                         清除搜索
@@ -33,7 +33,7 @@
             </form>
         </div>
         <div class="ml-4">
-            <a href="{{ route('permissions.create') }}" class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+            <a href="{{ route('admin.permissions.create') }}" class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                 <i class="fas fa-plus mr-2"></i>添加权限
             </a>
         </div>
@@ -74,10 +74,10 @@
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $permission->guard_name }}</td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $permission->created_at }}</td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                        <a href="{{ route('permissions.edit', $permission) }}" class="text-indigo-600 hover:text-indigo-900 mr-3">
+                        <a href="{{ route('admin.permissions.edit', $permission) }}" class="text-indigo-600 hover:text-indigo-900 mr-3">
                             <i class="fas fa-edit"></i> 编辑
                         </a>
-                        <form action="{{ route('permissions.destroy', $permission) }}" method="POST" class="inline">
+                        <form action="{{ route('admin.permissions.destroy', $permission) }}" method="POST" class="inline">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="text-red-600 hover:text-red-900" onclick="return confirm('确定要删除吗？')">
