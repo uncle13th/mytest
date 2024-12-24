@@ -10,15 +10,13 @@
         <div class="flex-1">
             <form action="{{ route('admin.menus.index') }}" method="GET" class="flex items-center">
                 <label for="status" class="mr-2 text-sm font-medium text-gray-700">菜单状态</label>
-                <div class="relative" style="width: 150px;">
-                    <select id="status" 
-                            name="status" 
-                            class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                            style="height: 36px;" onchange="this.form.submit()">
-                        <option value="all" {{ $status === 'all' ? 'selected' : '' }}>全部</option>
-                        <option value="show" {{ $status === 'show' ? 'selected' : '' }}>显示</option>
-                    </select>
-                </div>
+                <select id="status" 
+                        name="status" 
+                        class="w-32 rounded-md border border-gray-400 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm text-center"
+                        onchange="this.form.submit()">
+                    <option value="all" {{ $status === 'all' ? 'selected' : '' }}>全部</option>
+                    <option value="show" {{ $status === 'show' ? 'selected' : '' }}>显示</option>
+                </select>
             </form>
         </div>
         <div class="ml-4">
