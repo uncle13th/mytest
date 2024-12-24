@@ -70,15 +70,15 @@
                 <label class="block text-sm font-medium leading-6 text-gray-900">显示状态</label>
                 <div class="mt-2 space-x-4">
                     <label class="inline-flex items-center">
-                        <input type="radio" name="status" value="1" class="form-radio text-indigo-600 h-4 w-4" {{ old('status', 1) == 1 ? 'checked' : '' }}>
+                        <input type="radio" name="is_show" value="1" class="form-radio text-indigo-600 h-4 w-4" {{ old('is_show', 1) == 1 ? 'checked' : '' }}>
                         <span class="ml-2 text-sm text-gray-700">显示</span>
                     </label>
                     <label class="inline-flex items-center">
-                        <input type="radio" name="status" value="0" class="form-radio text-indigo-600 h-4 w-4" {{ old('status') === '0' ? 'checked' : '' }}>
+                        <input type="radio" name="is_show" value="0" class="form-radio text-indigo-600 h-4 w-4" {{ old('is_show') === '0' ? 'checked' : '' }}>
                         <span class="ml-2 text-sm text-gray-700">隐藏</span>
                     </label>
                 </div>
-                @error('status')
+                @error('is_show')
                     <p class="mt-2 text-sm font-medium text-red-600">{{ $message }}</p>
                 @enderror
             </div>

@@ -66,21 +66,34 @@ class MenuController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required|max:255',
-            'parent_id' => 'required|integer',
-            'url' => 'nullable|max:255',
-            'sort' => 'required|integer',
-            'is_show' => 'required|boolean',
-        ]);
+        // 调试信息
+        \Log::info('Menu store method called');
+        \Log::info('Request data:', $request->all());
 
-        // 如果是文件夹类型，清空 URL
-        if ($request->type === 'folder') {
-            $request->merge(['url' => null]);
+        try {
+            $validated = $request->validate([
+                'name' => 'required|max:255',
+                'parent_id' => 'required|integer',
+                'url' => 'nullable|max:255',
+                'sort' => 'required|integer',
+                'is_show' => 'required|boolean',
+            ]);
+
+            \Log::info('Validation passed:', $validated);
+
+            // 如果是文件夹类型，清空 URL
+            if ($request->type === 'folder') {
+                $request->merge(['url' => null]);
+            }
+
+            $menu = Menu::create($request->all());
+            \Log::info('Menu created:', $menu->toArray());
+
+            return redirect()->route('admin.menus.index')->with('success', '菜单创建成功');
+        } catch (\Exception $e) {
+            \Log::error('Error creating menu: ' . $e->getMessage());
+            return back()->withInput()->withErrors(['error' => '菜单创建失败：' . $e->getMessage()]);
         }
-
-        Menu::create($request->all());
-        return redirect()->route('admin.menus.index')->with('success', '菜单创建成功');
     }
 
     public function edit(Menu $menu)
