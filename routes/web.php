@@ -23,56 +23,20 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::prefix('admin')->name('admin.')->middleware(['auth:admin'])->group(function () {
-    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
-    
-    // 登录相关路由
-    Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
-    Route::post('login', [LoginController::class, 'login'])->name('login.post');
-    Route::post('logout', [LoginController::class, 'logout'])->name('logout');
+// 管理后台登录路由
+Route::get('admin/login', [LoginController::class, 'showLoginForm'])->name('admin.login')->middleware('guest:admin');
+Route::post('admin/login', [LoginController::class, 'login'])->name('admin.login.post')->middleware('guest:admin');
 
-    // 管理员管理
-    Route::resource('admins', AdminController::class)->names([
-        'index' => 'admins.index',
-        'create' => 'admins.create',
-        'store' => 'admins.store',
-        'show' => 'admins.show',
-        'edit' => 'admins.edit',
-        'update' => 'admins.update',
-        'destroy' => 'admins.destroy',
-    ]);
+// 管理后台认证路由
+Route::middleware(['auth:admin'])->group(function () {
+    Route::post('admin/logout', [LoginController::class, 'logout'])->name('admin.logout');
     
-    // 角色管理
-    Route::resource('roles', RoleController::class)->names([
-        'index' => 'roles.index',
-        'create' => 'roles.create',
-        'store' => 'roles.store',
-        'show' => 'roles.show',
-        'edit' => 'roles.edit',
-        'update' => 'roles.update',
-        'destroy' => 'roles.destroy',
-    ]);
-    
-    // 权限管理
-    Route::resource('permissions', PermissionController::class)->names([
-        'index' => 'permissions.index',
-        'create' => 'permissions.create',
-        'store' => 'permissions.store',
-        'show' => 'permissions.show',
-        'edit' => 'permissions.edit',
-        'update' => 'permissions.update',
-        'destroy' => 'permissions.destroy',
-    ]);
-    
-    // 菜单管理
-    Route::resource('menus', MenuController::class)->names([
-        'index' => 'menus.index',
-        'create' => 'menus.create',
-        'store' => 'menus.store',
-        'show' => 'menus.show',
-        'edit' => 'menus.edit',
-        'update' => 'menus.update',
-        'destroy' => 'menus.destroy',
-    ]);
-    Route::post('menus/update-order', [MenuController::class, 'updateOrder'])->name('menus.updateOrder');
+    Route::prefix('admin')->as('admin.')->group(function () {
+        Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+        Route::resource('admins', AdminController::class);
+        Route::resource('roles', RoleController::class);
+        Route::resource('permissions', PermissionController::class);
+        Route::resource('menus', MenuController::class);
+        Route::post('menus/order', [MenuController::class, 'updateOrder'])->name('menus.order');
+    });
 });
