@@ -27,7 +27,7 @@ class Menu extends Model
      */
     public function children()
     {
-        return $this->hasMany(Menu::class, 'parent_id');
+        return $this->hasMany(Menu::class, 'parent_id')->orderBy('sort');
     }
 
     /**
@@ -43,7 +43,11 @@ class Menu extends Model
      */
     public function getAllChildren()
     {
-        return $this->children()->with('children');
+        return $this->children()->with(['children' => function($query) {
+            $query->orderBy('sort')->with(['children' => function($query) {
+                $query->orderBy('sort');
+            }]);
+        }]);
     }
 
     /**

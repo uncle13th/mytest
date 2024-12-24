@@ -22,7 +22,12 @@ class MenuController extends Controller
         }
 
         $menus = $query->with(['children' => function ($query) use ($status) {
-            $query->orderBy('sort');
+            $query->orderBy('sort')->with(['children' => function ($query) use ($status) {
+                $query->orderBy('sort');
+                if ($status !== 'all') {
+                    $query->where('is_show', true);
+                }
+            }]);
             if ($status !== 'all') {
                 $query->where('is_show', true);
             }
